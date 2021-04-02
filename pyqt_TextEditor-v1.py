@@ -21,7 +21,7 @@ class MainWindow(qtw.QWidget):
         self.setFixedSize(1500, 800)
         self.setWindowTitle("TextEditor")
 
-        # Some Info Label;
+        # Basic Info Label;
         self.infoLabel = qtw.QLabel("Notepad made my: [bosdos12]  |  ", self)
         self.infoLabel.setFont(qtg.QFont("Arial", 23))
         self.infoLabel.move(10, 10)
@@ -63,7 +63,7 @@ class MainWindow(qtw.QWidget):
         self.TextsLocation.setFixedSize(1160, 670)
         self.TextsLocation.move(20, 110)
 
-        # Right side info labels;
+        # Right side info labels #;
         #/////////////////////////////////////////////////////////////////////
         editTextColLabel = qtw.QLabel("Edit Text Color", self)             #//
         editTextColLabel.setFont(qtg.QFont("Arial", 20))                   #//
@@ -99,7 +99,7 @@ class MainWindow(qtw.QWidget):
             else: 
                 pass
         
-        # Edit text font size combbox;
+        # Edit text font size combobox;
         self.editTextFontSizeSpinBox = qtw.QSpinBox(self,
             value=15, maximum=100, 
             minimum=1, singleStep=1)
@@ -127,10 +127,13 @@ class MainWindow(qtw.QWidget):
             with open(hitPath, "r") as openedPath:
                 self.TextsLocation.setText(openedPath.read())
         else:
+            # As the file doesn't exist already, 
+            # asking the user if they want to create a new file via a tkinter popup window/widget;
             self.continueOrDont = tk.Tk()
+            # Placing the popup at the center
             self.continueOrDont.geometry(f"300x180+{str(int((self.continueOrDont.winfo_screenwidth()/2)-150))}+{str(int((self.continueOrDont.winfo_screenheight()/2)-90))}")
             self.continueOrDont.title("File doesnt exist")
-            tk.Label(self.continueOrDont, text="File doesnt exist,\ncreate new file?", font=("Arial", 20)).place(x=40, y=8)
+            tk.Label(self.continueOrDont, text="File doesnt exist,\ncreate a new file?", font=("Arial", 20)).place(x=40, y=8)
 
             yesButton = tk.Button(self.continueOrDont, text=" No ", bg="red", fg="white", font=("Arial", 20), width=5, command=lambda: self.continueOrDont.destroy()).place(x=45, y=90)
             noButton = tk.Button(self.continueOrDont, text=" Yes", bg="lime", fg="white", font=("Arial", 20), width=5, command=lambda: self.createNewFileF()).place(x=165, y=90)
@@ -138,7 +141,7 @@ class MainWindow(qtw.QWidget):
             self.continueOrDont.mainloop()
     
     # This function is called once the continueOrDont question gets answered with yes.
-    # continueOrDont widget gets destroyed, than the desired file gets created on the desired directory;
+    # continueOrDont widget gets destroyed, then the desired file gets created on the desired directory;
     # At the end, the user gets notified about the new file creation;
     def createNewFileF(self):
         self.continueOrDont.destroy()
@@ -171,12 +174,9 @@ class MainWindow(qtw.QWidget):
         self.TextsLocation.setStyleSheet(f"background-color: {self.editBackgroundColorCombbox.currentText()}; color:{self.editTextColorCombbox.currentText()};")
 
 
-
-
+        
+# Running the app;
 app = qtw.QApplication([])
 mw = MainWindow()
 app.exec_()
-
-
-
 
